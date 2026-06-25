@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style>
+  :root{
+    --bg:#0d1117; --panel:#151b23; --border:#26303b; --text:#e6edf3; --muted:#8b96a3;
+    --mono:'JetBrains Mono', 'SF Mono', Consolas, monospace; --accent:#7c8cff;
+  }
+  *{box-sizing:border-box;}
+  body{width:320px;margin:0;background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;}
+  header{padding:14px 16px 10px;border-bottom:1px solid var(--border);}
+  header .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:0 0 2px;}
+  header h1{font-size:15px;margin:0;font-weight:650;}
+  #list{padding:8px 0;max-height:340px;overflow-y:auto;}
+  .item{padding:10px 16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;}
+  .item:hover{background:rgba(124,140,255,0.08);}
+  .item:last-child{border-bottom:none;}
+  .item .name{font-size:13px;font-weight:600;margin-bottom:2px;}
+  .item .meta{font-size:11px;color:var(--muted);font-family:var(--mono);margin-bottom:4px;}
+  .badge{display:inline-block;font-size:10px;font-family:var(--mono);padding:2px 7px;border-radius:999px;border:1px solid var(--border);color:var(--muted);}
+  .badge.registered{border-color:#3fb950;color:#3fb950;}
+  .empty{padding:24px 16px;color:var(--muted);font-size:12px;text-align:center;}
+  footer{padding:10px 16px;border-top:1px solid var(--border);display:flex;gap:8px;}
+  button{flex:1;font-size:12px;font-weight:600;padding:8px;border-radius:7px;border:none;cursor:pointer;background:var(--accent);color:#0a0e14;}
+  button.secondary{background:transparent;border:1px solid var(--border);color:var(--text);}
+</style>
+</head>
+<body>
+  <header>
+    <p class="eyebrow">Contest Sync</p>
+    <h1>Upcoming contests</h1>
+  </header>
+  <div id="list"><div class="empty">Loading…</div></div>
+  <footer>
+    <button id="refresh">Check now</button>
+    <button class="secondary" id="openOptions">Settings</button>
+  </footer>
+  <script src="../lib/browser-polyfill.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

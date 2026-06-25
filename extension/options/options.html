@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Contest Sync — Settings</title>
+<style>
+  :root{
+    --bg:#0d1117;
+    --panel:#151b23;
+    --border:#26303b;
+    --text:#e6edf3;
+    --muted:#8b96a3;
+    --mono:'JetBrains Mono', 'SF Mono', Consolas, monospace;
+    --sans:'Inter', system-ui, sans-serif;
+    --cf:#1f8acb;
+    --lc:#f5a623;
+    --cc:#5b4638;
+    --hr:#39a857;
+    --ac:#3367d6;
+    --accent:#7c8cff;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    padding:40px 24px 80px;
+  }
+  .wrap{max-width:720px;margin:0 auto;}
+  header{margin-bottom:32px;}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin:0 0 6px;
+  }
+  h1{font-size:26px;margin:0 0 8px;font-weight:650;}
+  header p{color:var(--muted);margin:0;font-size:14px;line-height:1.6;}
+
+  .platforms{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap;}
+  .chip{
+    font-family:var(--mono);font-size:11px;padding:4px 10px;border-radius:999px;
+    border:1px solid var(--border); color:var(--muted);
+  }
+  .chip b{color:var(--text);}
+  .chip.cf{border-color:var(--cf);} .chip.lc{border-color:var(--lc);}
+  .chip.cc{border-color:var(--cc);} .chip.hr{border-color:var(--hr);} .chip.ac{border-color:var(--ac);}
+
+  section{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:22px 24px;
+    margin-bottom:18px;
+  }
+  section h2{
+    font-size:15px;margin:0 0 4px;display:flex;align-items:center;gap:8px;
+  }
+  .step{
+    font-family:var(--mono);font-size:11px;color:var(--bg);background:var(--accent);
+    width:20px;height:20px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;
+  }
+  section .hint{color:var(--muted);font-size:13px;margin:4px 0 16px;line-height:1.6;}
+  section .hint a{color:var(--accent);text-decoration:none;}
+  section .hint a:hover{text-decoration:underline;}
+
+  label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-family:var(--mono);}
+  input[type=text], input[type=password]{
+    width:100%;padding:10px 12px;border-radius:8px;border:1px solid var(--border);
+    background:#0a0e14;color:var(--text);font-size:13px;margin-bottom:14px;font-family:var(--mono);
+  }
+  input:focus{outline:2px solid var(--accent);outline-offset:1px;}
+
+  .row{display:flex;gap:12px;}
+  .row > div{flex:1;}
+
+  .toggle-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+  .toggle-row span{font-size:13px;}
+  .switch{position:relative;width:40px;height:22px;flex-shrink:0;}
+  .switch input{opacity:0;width:0;height:0;}
+  .slider{position:absolute;inset:0;background:var(--border);border-radius:999px;cursor:pointer;transition:.2s;}
+  .slider:before{content:"";position:absolute;width:16px;height:16px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;}
+  input:checked + .slider{background:var(--accent);}
+  input:checked + .slider:before{transform:translateX(18px);}
+
+  button{
+    font-family:var(--sans);font-size:13px;font-weight:600;padding:10px 16px;
+    border-radius:8px;border:none;cursor:pointer;background:var(--accent);color:#0a0e14;
+  }
+  button.secondary{background:transparent;border:1px solid var(--border);color:var(--text);}
+  button:hover{filter:brightness(1.08);}
+
+  .status{font-size:12px;font-family:var(--mono);margin-top:10px;min-height:16px;}
+  .status.ok{color:#3fb950;}
+  .status.err{color:#f85149;}
+
+  footer{text-align:center;color:var(--muted);font-size:12px;margin-top:30px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Contest Sync</p>
+    <h1>Settings</h1>
+    <p>Connect your accounts once. From then on, new contests trigger a notification, and registering on a contest page auto-creates a calendar event (and a Notion row, if you've connected it).</p>
+    <div class="platforms">
+      <span class="chip cf"><b>CF</b> Codeforces</span>
+      <span class="chip lc"><b>LC</b> LeetCode</span>
+      <span class="chip cc"><b>CC</b> CodeChef</span>
+      <span class="chip hr"><b>HR</b> HackerRank</span>
+      <span class="chip ac"><b>AC</b> AtCoder</span>
+    </div>
+  </header>
+
+  <section>
+    <h2><span class="step">1</span> Contest discovery (clist.by)</h2>
+    <p class="hint">Free account at <a href="https://clist.by/api/v2/doc/" target="_blank">clist.by/api</a>. Used only to detect new contests and trigger notifications — not for registration detection.</p>
+    <div class="row">
+      <div>
+        <label>clist.by username</label>
+        <input type="text" id="clistUsername" placeholder="your-username" />
+      </div>
+      <div>
+        <label>clist.by API key</label>
+        <input type="password" id="clistApiKey" placeholder="••••••••" />
+      </div>
+    </div>
+    <button id="saveClist">Save</button>
+    <button class="secondary" id="pollNow">Check for new contests now</button>
+    <div class="status" id="clistStatus"></div>
+  </section>
+
+  <section>
+    <h2><span class="step">2</span> Google Calendar</h2>
+    <p class="hint">
+      Create an OAuth client (type "Chrome Extension") in the
+      <a href="https://console.cloud.google.com/apis/credentials" target="_blank">Google Cloud Console</a>,
+      enable the Calendar API, and paste the Client ID below. Your extension ID for the redirect URI is shown after saving.
+    </p>
+    <div class="toggle-row">
+      <span>Sync registrations to Google Calendar</span>
+      <label class="switch">
+        <input type="checkbox" id="googleEnabled" />
+        <span class="slider"></span>
+      </label>
+    </div>
+    <label>OAuth Client ID</label>
+    <input type="text" id="googleClientId" placeholder="xxxxxxxx.apps.googleusercontent.com" />
+    <label>Calendar ID (leave blank for your primary calendar)</label>
+    <input type="text" id="googleCalendarId" placeholder="primary" />
+    <button id="saveGoogle">Save</button>
+    <button class="secondary" id="testGoogle">Test connection</button>
+    <div class="status" id="googleStatus"></div>
+  </section>
+
+  <section>
+    <h2><span class="step">3</span> Notion (optional)</h2>
+    <p class="hint">
+      Create an integration at <a href="https://www.notion.so/my-integrations" target="_blank">notion.so/my-integrations</a>,
+      share your target database with it, then paste the token and database ID (the 32-character ID in the database URL).
+    </p>
+    <div class="toggle-row">
+      <span>Log registrations to a Notion database</span>
+      <label class="switch">
+        <input type="checkbox" id="notionEnabled" />
+        <span class="slider"></span>
+      </label>
+    </div>
+    <label>Notion integration token</label>
+    <input type="password" id="notionToken" placeholder="secret_..." />
+    <label>Database ID</label>
+    <input type="text" id="notionDatabaseId" placeholder="32-character-id" />
+    <button id="saveNotion">Save</button>
+    <div class="status" id="notionStatus"></div>
+  </section>
+
+  <footer>Your extension ID: <span id="extId" style="font-family:var(--mono)"></span> — use this for the OAuth redirect URI.</footer>
+</div>
+<script src="../lib/browser-polyfill.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

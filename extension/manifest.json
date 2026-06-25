@@ -1,0 +1,72 @@
+{
+  "manifest_version": 3,
+  "name": "Contest Sync — Calendar & Notion",
+  "version": "1.0.0",
+  "description": "Get notified about new coding contests (Codeforces, LeetCode, CodeChef, HackerRank, AtCoder) and auto-add them to Google Calendar + Notion the moment you register.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "alarms",
+    "notifications",
+    "identity",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://*.codeforces.com/*",
+    "https://leetcode.com/*",
+    "https://www.codechef.com/*",
+    "https://www.hackerrank.com/*",
+    "https://atcoder.jp/*",
+    "https://clist.by/*",
+    "https://www.googleapis.com/*",
+    "https://oauth2.googleapis.com/*",
+    "https://api.notion.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://codeforces.com/*", "https://*.codeforces.com/*"],
+      "js": ["lib/browser-polyfill.js", "content-scripts/common.js", "content-scripts/codeforces.js"]
+    },
+    {
+      "matches": ["https://leetcode.com/*"],
+      "js": ["lib/browser-polyfill.js", "content-scripts/common.js", "content-scripts/leetcode.js"]
+    },
+    {
+      "matches": ["https://www.codechef.com/*"],
+      "js": ["lib/browser-polyfill.js", "content-scripts/common.js", "content-scripts/codechef.js"]
+    },
+    {
+      "matches": ["https://www.hackerrank.com/*"],
+      "js": ["lib/browser-polyfill.js", "content-scripts/common.js", "content-scripts/hackerrank.js"]
+    },
+    {
+      "matches": ["https://atcoder.jp/*"],
+      "js": ["lib/browser-polyfill.js", "content-scripts/common.js", "content-scripts/atcoder.js"]
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "contest-sync@example.com",
+      "strict_min_version": "109.0"
+    }
+  }
+}
